@@ -42,6 +42,7 @@ tutoriales = [
     "https://youtu.be/BtsC-K4uWZQ",
 ]
 
+# Actualización de mi código 
 
 @bot.command()
 async def idea(ctx):
