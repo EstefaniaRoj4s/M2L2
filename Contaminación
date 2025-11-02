@@ -1,0 +1,68 @@
+import discord
+from discord.ext import commands
+import os, random, requests
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'✅ Bot conectado como {bot.user}')
+
+# Lista de Ideas
+manualidades = [
+    "✂️ Haz una maceta con una botella plástica decorada.",
+    "💡 Convierte una botella en una lámpara con luces LED.",
+    "🌟 Crea flores decorativas recortando botellas y pintándolas.",
+    "🎯 Haz un juego de bolos con botellas recicladas.",
+    "🧸 Haz un organizador usando botellas de plástico.",
+    "📦 Crea una alcancía personalizada con una botella.",
+    "🎨 Usa tapas plásticas para mosaicos artísticos.",
+]
+
+# Materiales comunes
+materiales_lista = [
+    "Botellas plásticas",
+    "Tijeras",
+    "Pegante o silicona",
+    "Marcadores permanentes",
+    "Pinturas acrílicas",
+    "Tapas plásticas",
+    "Luces LED",
+    "Cartón para soporte",
+]
+
+# Tutoriales (videos / páginas)
+tutoriales = [
+    "https://youtu.be/C_f9zC5l3ww",
+    "https://youtu.be/zqvB5AtVujw",
+    "https://youtu.be/Hj2q8IhUhPM",
+    "https://youtu.be/BtsC-K4uWZQ",
+]
+
+
+@bot.command()
+async def idea(ctx):
+    await ctx.send(random.choice(manualidades))
+
+@bot.command()
+async def materiales(ctx):
+    lista = "\n".join(f"• {m}" for m in materiales_lista)
+    await ctx.send(f"🧰 Materiales sugeridos:\n{lista}")
+
+@bot.command()
+async def tutorial(ctx):
+    await ctx.send(f"📌 Tutorial recomendado:\n{random.choice(tutoriales)}")
+
+@bot.command()
+async def imagen(ctx):
+    try:
+        img_name = random.choice(os.listdir('images'))
+        with open(f'images/{img_name}', 'rb') as f:
+            await ctx.send(file=discord.File(f))
+    except:
+        await ctx.send("⚠️ No hay imágenes en la carpeta 'images'")
+
+bot.run("aquí va el token ")
